@@ -49,11 +49,17 @@ class BookShelf extends Component {
                     currentBook.status === 'currentlyReading'))
                   }
                 />
-                <FutureReads 
-
+                <FutureReads
+                  onHandleStatusChange={this.handleStatusChange}
+                  books={this.state.books.filter((currentBook) => (
+                    currentBook.status === 'wantToRead'))
+                  }
                 />
                 <Read
-
+                  onHandleStatusChange={this.handleStatusChange}
+                  books={this.state.books.filter((currentBook) => (
+                    currentBook.status === 'read'))
+                  }
                 />
       
               </div>
