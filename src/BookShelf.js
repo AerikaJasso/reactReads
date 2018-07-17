@@ -6,7 +6,33 @@ import Read from './Read';
 
 class BookShelf extends Component {
   state = {
-    books: []
+   books: [{
+    bookId: 1,
+    status: 'currentlyReading'
+   },
+   {
+    bookId: 2,
+    status: 'read'
+   },
+   {
+    bookId: 3,
+    status: 'wantToRead'
+   }
+  ]
+  }
+
+  handleStatusChange = (event, id) => {
+    const updatedBooksArray = this.state.books.map((book) => {
+      if (book.bookId === id){
+        book.status = event;
+      }
+      return book;
+    });
+    this.setState(() => {
+      return {
+        books: updatedBooksArray
+      }
+    });
   }
   render(){
     return(
@@ -18,7 +44,10 @@ class BookShelf extends Component {
             <div className="list-books-content">
               <div>
                 <CurrentReads
-                
+                  onHandleStatusChange={this.handleStatusChange}
+                  books={this.state.books.filter((currentBook) => (
+                    currentBook.status === 'currentlyReading'))
+                  }
                 />
                 <FutureReads 
 
