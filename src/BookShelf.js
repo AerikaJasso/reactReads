@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CurrentReads from './CurrentReads';
+import { Link } from 'react-router-dom';
 import FutureReads from './FutureReads';
 import Read from './Read';
 
@@ -65,7 +66,12 @@ class BookShelf extends Component {
               </div>
             </div>
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+            <Link to={{
+              pathname: '/search',
+              className: 'add-book',
+              state: { fromDashboard: true}
+            }}
+            >Add a Book</Link>
             </div>
           </div>
 
