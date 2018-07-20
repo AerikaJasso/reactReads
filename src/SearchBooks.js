@@ -1,32 +1,41 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import * as BooksAPI from './BooksAPI';
+import SearchBar from './SearchBar';
+import { BooksList } from './BooksList';
 
 class SearchBooks extends Component {
-  render(){
-    return(
-      <div className="search-books">
-        <div className="search-books-bar">
-          <Link
-            className="close-search"
-            to='/'
-          >
-          Close
-          </Link>
-          <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
+  static propTypes = {
+    books: PropTypes.array.isRequired
+  }
 
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
-            <input type="text" placeholder="Search by title or author"/>
-          </div>
-        </div>
-      <div className="search-books-results">
-        <ol className="books-grid"></ol>
-      </div>
+  state={
+    query: ''
+  }
+
+  handleSearchQuery = (query) => {
+    // query= query.trim();
+    this.setState({ query: query});
+  }  
+
+  render(){
+    console.log("this is the books array in the Search Books:", this.props.books);
+    const { books, handleStatusChange } = this.props
+    const { query } = this.state
+    
+    return(
+      <div>
+        <SearchBar
+          handleSearchQuery={this.handleSearchQuery}
+          query={query}
+        />
+
+        <BooksList
+          books={books}
+          query={query}
+          handleStatusChange={handleStatusChange}
+        />
+       
     </div>
     )
   }

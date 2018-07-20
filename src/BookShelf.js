@@ -2,40 +2,17 @@ import React, { Component } from 'react';
 import CurrentReads from './CurrentReads';
 import { Link } from 'react-router-dom';
 import FutureReads from './FutureReads';
+import PropTypes from 'prop-types'
 import Read from './Read';
 
 
 class BookShelf extends Component {
-  state = {
-   books: [{
-    bookId: 1,
-    status: 'currentlyReading'
-   },
-   {
-    bookId: 2,
-    status: 'read'
-   },
-   {
-    bookId: 3,
-    status: 'wantToRead'
-   }
-  ]
-  }
-
-  handleStatusChange = (event, id) => {
-    const updatedBooksArray = this.state.books.map((book) => {
-      if (book.bookId === id){
-        book.status = event;
-      }
-      return book;
-    });
-    this.setState(() => {
-      return {
-        books: updatedBooksArray
-      }
-    });
+ static propTypes = {
+    books: PropTypes.array.isRequired,
+    onHandleStatusChange: PropTypes.func.isRequired,
   }
   render(){
+    const { books, onHandleStatusChange } = this.props
     return(
       <div>
       <div className="list-books">
@@ -45,20 +22,20 @@ class BookShelf extends Component {
             <div className="list-books-content">
               <div>
                 <CurrentReads
-                  onHandleStatusChange={this.handleStatusChange}
-                  books={this.state.books.filter((currentBook) => (
+                  onHandleStatusChange={onHandleStatusChange}
+                  books={books.filter((currentBook) => (
                     currentBook.status === 'currentlyReading'))
                   }
                 />
                 <FutureReads
-                  onHandleStatusChange={this.handleStatusChange}
-                  books={this.state.books.filter((currentBook) => (
+                  onHandleStatusChange={onHandleStatusChange}
+                  books={books.filter((currentBook) => (
                     currentBook.status === 'wantToRead'))
                   }
                 />
                 <Read
-                  onHandleStatusChange={this.handleStatusChange}
-                  books={this.state.books.filter((currentBook) => (
+                  onHandleStatusChange={onHandleStatusChange}
+                  books={books.filter((currentBook) => (
                     currentBook.status === 'read'))
                   }
                 />
@@ -68,8 +45,7 @@ class BookShelf extends Component {
             <div className="open-search">
             <Link to={{
               pathname: '/search',
-              className: 'add-book',
-              state: { fromDashboard: true}
+              className: 'add-book'
             }}
             >Add a Book</Link>
             </div>
