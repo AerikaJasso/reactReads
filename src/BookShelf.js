@@ -5,7 +5,6 @@ import FutureReads from './FutureReads';
 import PropTypes from 'prop-types'
 import Read from './Read';
 
-
 class BookShelf extends Component {
  static propTypes = {
     books: PropTypes.array.isRequired,

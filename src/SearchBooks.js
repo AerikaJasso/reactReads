@@ -4,23 +4,27 @@ import * as BooksAPI from './BooksAPI';
 import SearchBar from './SearchBar';
 import { BooksList } from './BooksList';
 
-class SearchBooks extends Component {
-  static propTypes = {
-    books: PropTypes.array.isRequired
-  }
 
+// What state does my app need/have?
+// When does it change?
+
+class SearchBooks extends Component {
+  // static propTypes = {
+  //   books: PropTypes.array.isRequired
+  // }
   state={
     query: ''
   }
-
+ 
   handleSearchQuery = (query) => {
-    // query= query.trim();
     this.setState({ query: query});
+    if (query && query.length > 1 ){
+      this.props.searchBooks(query);
+    }
   }  
 
   render(){
-    console.log("this is the books array in the Search Books:", this.props.books);
-    const { books, handleStatusChange } = this.props
+    const { books, handleStatusChange, results } = this.props
     const { query } = this.state
     
     return(
@@ -29,9 +33,10 @@ class SearchBooks extends Component {
           handleSearchQuery={this.handleSearchQuery}
           query={query}
         />
-
+        <p>{query}</p>
         <BooksList
           books={books}
+          results={results}
           query={query}
           handleStatusChange={handleStatusChange}
         />
