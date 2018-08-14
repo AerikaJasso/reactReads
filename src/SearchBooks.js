@@ -1,47 +1,49 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import * as BooksAPI from './BooksAPI';
 import SearchBar from './SearchBar';
-import { BooksList } from './BooksList';
-
+import BookGrid from './BookGrid';
+import escapeStringRegexp from 'escape-string-regexp';
 
 // What state does my app need/have?
 // When does it change?
-
 class SearchBooks extends Component {
-  // static propTypes = {
-  //   books: PropTypes.array.isRequired
-  // }
-  state={
-    query: ''
-  }
  
-  handleSearchQuery = (query) => {
-    this.setState({ query: query});
-    if (query && query.length > 1 ){
-      this.props.searchBooks(query);
+    state = {
+      query:''
     }
-  }  
+  
+  searchQuery = (query) => {
+    if (query){
+      query = escapeStringRegexp(query);
+      this.setState({ query: query}, () => {
+        this.props.queryBooks(query);
+      }); 
+    }
+    else{
+      this.setState({ query: query });
+    }
+  } 
+  
 
   render(){
-    const { books, handleStatusChange, results } = this.props
-    const { query } = this.state
-    
+    const { query } = this.state;
+    const { searchedBooks, handleStatusChange, updateBookShelf, getBooks } = this.props;
     return(
       <div>
+      
         <SearchBar
-          handleSearchQuery={this.handleSearchQuery}
+          searchQuery={this.searchQuery}
           query={query}
+          getBooks={getBooks}
         />
-        <p>{query}</p>
-        <BooksList
-          books={books}
-          results={results}
-          query={query}
-          handleStatusChange={handleStatusChange}
-        />
-       
-    </div>
+        { query.length > 0 &&
+          <BookGrid
+            query={query}
+            searchedBooks={searchedBooks}
+            handleStatusChange={handleStatusChange}
+            updateBookShelf={updateBookShelf}
+          />
+        }    
+      </div>
     )
   }
 }

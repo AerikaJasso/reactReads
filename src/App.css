@@ -43,6 +43,9 @@ body, .app {
 .bookshelf-title {
   border-bottom: 1px solid #dedede;
 }
+h2.bookshelf-title {
+  text-align: center;
+}
 .bookshelf-books {
   text-align: center;
 }
