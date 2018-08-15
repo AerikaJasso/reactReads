@@ -4,7 +4,6 @@ import { Route, withRouter } from 'react-router-dom'
 import BookShelf from './BookShelf';
 import SearchBooks from './SearchBooks';
 import * as BooksAPI from './BooksAPI';
-import createHistory from "history/createBrowserHistory"
 
 class BooksApp extends React.Component {
   
@@ -16,7 +15,7 @@ class BooksApp extends React.Component {
     }
   }
   // === Set initial state === //
-   componentWillMount() {
+   componentWillMount = () => {
     this.getBooks();
    }
 
@@ -28,7 +27,7 @@ class BooksApp extends React.Component {
       }))
      })
      .catch((err) => {
-       console.log('Error during fetch GET request', err);
+       console.log('Error', err);
      })
    }
   
@@ -42,31 +41,27 @@ class BooksApp extends React.Component {
           const shelvedBook = books.find((b) => b.id === d.id);
           if(shelvedBook){
             d.shelf = shelvedBook.shelf;
-          console.log("shelved Book OBJECT: ", d);
+          
           }
           else{
             d.shelf = 'none';
           }
-          console.log("DATA SHELF OBJECT: ", d);
+          
           return d
         })
       }
       this.setState({searchedBooks: data})
-      console.log("data array: ", data);
-      console.log("searchBooks state: ", this.state.searchedBooks);
+      
    })
   
   }
 
   // === Update Shelf Status === //
    updateBookShelf = (bookObj, shelf) => {
-    // console.log("Book in App.js: ", bookObj);
-     
+    
     BooksAPI.update(bookObj, shelf)
     .then(() => {
       let books = this.state.books;
-      console.log('The books in update: ', books);
-      
       // Handle None
       if( shelf === 'none' ){
         this.setState((prevState) => ({
@@ -77,7 +72,6 @@ class BooksApp extends React.Component {
       }
       // filtering out the bookObj from books arr.
       else if(books.filter((b) => b.id !== bookObj.id).concat([bookObj])){
-        console.log("IN THE ELSEIF BOOKOBJ", [bookObj]);
         this.setState((prevState) => ({
           books: prevState.books
         }))
@@ -91,7 +85,7 @@ class BooksApp extends React.Component {
    
   render() {
     const {books, searchedBooks}= this.state;
-    console.log("NEW BOOKS IN APP.JS: ", books);
+   
     return (
      
       <div className="app">

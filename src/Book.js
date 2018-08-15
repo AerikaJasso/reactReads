@@ -3,7 +3,6 @@ import Message from './Message';
 
 const Book = (props) => {
   const { updateBookShelf, book} = props;
-  console.log("BooK in book: ", book);
   const changeShelf = (book, shelf) => {
     updateBookShelf(book, shelf);
   };
@@ -13,8 +12,12 @@ const Book = (props) => {
       <div className="book">
         <div className="book-top">
           { book.imageLinks && book.imageLinks.smallThumbnail ? (
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-            ) : (
+            <div 
+              className="book-cover" 
+              style={
+                { width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }
+                }></div>
+          ) : (
               <Message />
             )
           }
