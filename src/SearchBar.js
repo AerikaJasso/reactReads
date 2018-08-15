@@ -19,10 +19,10 @@ const SearchBar = (props) => {
         </Link>
         <div className="search-books-input-wrapper">
           <input
-          type="text" 
-          placeholder="Search by title or author"
-          value={query}
-          onChange={(event) => handleSearchQuery(event.target.value)}  
+            type="text" 
+            placeholder="Search by title or author"
+            value={query}
+            onChange={(event) => handleSearchQuery(event.target.value)}  
           />
         </div>
       </div>
